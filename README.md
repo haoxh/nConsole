@@ -1,0 +1,2 @@
+# nConsole
+Shared console
