@@ -5,7 +5,13 @@
   "main": "index.js",
   "scripts": {
     "build": "node scripts/build.js",
-    "eslint":"npx eslint src --ext .js"
+    "eslint": "npx eslint src --ext .js"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run eslint",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   },
   "repository": {
     "type": "git",
@@ -18,11 +24,6 @@
     "url": "https://github.com/haoxh/nConsole/issues"
   },
   "homepage": "https://github.com/haoxh/nConsole#readme",
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run eslint"
-    }
-  },
   "devDependencies": {
     "@babel/core": "^7.5.4",
     "@babel/plugin-external-helpers": "^7.2.0",
