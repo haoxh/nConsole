@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Shared console</title>
+</head>
+<style>
+html,body{
+  height: 100%;
+  overflow:auto;
+  -webkit-overflow-scrolling:touch
+}
+#ss{
+  height: 100%;
+  overflow:auto;
+}
+</style>
+<body >
+  <div id='ss'>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+      <p>Shared console</p>
+  </div>
+  
+
+</body>
+<script src="./dist/nconsole.umd.min.js"></script>
+<script>
+  nConsole({
+    host:'192.168.0.103'
+  })
+  document.querySelector('#ss').addEventListener('scroll', function (e) {
+    console.log('scrollTop:'+ e.target.scrollTop)
+  })
+  
+</script>
+</html>
