@@ -116,6 +116,9 @@ function registerConsole(code) {
     return socketEmit(Array.prototype.slice.apply(arguments), code);
   };
 }
+window.console['performance'] = function _performance() {
+  socketEmit(Array.prototype.slice.apply(arguments), 'performance');
+}
 
 function fetchState(data) {
   if (data === "fetchOpen") {
