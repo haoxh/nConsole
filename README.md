@@ -4,6 +4,9 @@ Shared console
 
 ## nConsole 特性
 
+兼容性：
+![](https://saucelabs.com/browser-matrix/socket.svg)
+
 ### 1\. 跨端共享 console.log
 
 - 打开其他此页面窗口或其他设备时，数据共享打印
