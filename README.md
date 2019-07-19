@@ -70,7 +70,7 @@ console.fetch.close()
 $ npx nconsole
 ```
 
-引入命令
+引入依赖
 
 ```html
 <script src="./dist/nconsole.umd.min.js"></script>

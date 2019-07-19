@@ -19,7 +19,7 @@
   "bin":{
     "nConsole": "./index.js"
   },
-  "keywords": [],
+  "keywords": ["console"],
   "author": "https://github.com/haoxh",
   "readme": "https://github.com/haoxh/nConsole/blob/master/README.md",
   "license": "MIT",
