@@ -1,6 +1,6 @@
 {
   "name": "@haoxh/nconsole",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "跨端(移动端)共享 console.log & 跨端监控解决方案",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "url": "git+https://github.com/haoxh/nConsole.git"
   },
   "bin":{
-    "nConsole": "./index.js"
+    "nConsole": "node ./index.js"
   },
   "keywords": ["console"],
   "author": "https://github.com/haoxh",
