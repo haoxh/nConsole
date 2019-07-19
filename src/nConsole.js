@@ -59,9 +59,7 @@ export default function nConsole(options = {}) {
   ioMessage = io.connect(`${protocol}://${host}:${port}${path}`);
   repalceConsole()
   registerConsoleMessage()
-  setTimeout(() => {
-    ioMessage.emit("userAgent", userAgent);
-  }, 1000)
+  ioMessage.emit("userAgent", userAgent);
 
 }
 
@@ -184,7 +182,8 @@ const outputSorce = {
   "[object Set]": ToSet,
   "[object Map]": toMap,
   "[object Number]": toNumber,
-  "[object Undefined]": toUndefined
+  "[object Undefined]": toUndefined,
+  "[object Function]": toFunction,
 };
 
 function messageSend(code, args) {
@@ -317,6 +316,7 @@ function toBoolean(value) {
   return new Function("return " + value)();
 }
 
+
 function ToSet(value) {
   if (window.Set) {
     return new Set(JSON.parse(value));
@@ -335,6 +335,10 @@ function toMap(value) {
   } else {
     return value;
   }
+}
+
+function toFunction(value) {
+  return new Function("return " + value)();
 }
 
 function toNumber(value) {
