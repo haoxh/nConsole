@@ -67,7 +67,7 @@ console.fetch.close()
 启动服务
 
 ```shell
-npx nconsole
+$ npx nconsole
 ```
 
 引入命令
