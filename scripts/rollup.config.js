@@ -30,7 +30,7 @@ module.exports = {
     ]
   },
   outputOpt: {
-    file: 'dist/nconsole.umd.min.js',
+    file: 'nconsole.umd.min.js',
     format: 'umd',
     name:'nConsole',
     banner:`/*!\n* nConsole v1.0.0\n* (c) 2018-2019 haoxh\n* Released under the MIT License.\n*/`

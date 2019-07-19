@@ -59,3 +59,35 @@ console.fetch.open()
 // 关闭
 console.fetch.close()
 ```
+
+### 使用 nConsole
+
+> npm i @haoxh/nconsole --save-dev
+
+启动服务
+
+```shell
+npx nconsole
+```
+
+引入命令
+
+```html
+<script src="./dist/nconsole.umd.min.js"></script>
+<script>
+  //启动 nConsole
+  nConsole({
+    //启动的 nconsole ip 地址
+    host:'192.168.0.100'
+  })
+</script>
+```
+
+or
+
+```js
+import nConsole from '@haoxh/nconsole/nconsole.umd.min'
+nConsole({
+  host:'192.168.0.100'
+})
+```

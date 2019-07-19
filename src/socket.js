@@ -1,6 +1,6 @@
 
 let fetchState = null
-function socket(port = 3114) {
+module.exports = function socket(port = 3114) {
   console.log(port)
   const io = require('socket.io')(port);
   const ipv4 = require('./localIpv4.js')
@@ -49,11 +49,5 @@ function socket(port = 3114) {
       });
     });
 }
-let port = process.argv.find(i =>{
-  if(i.search(/^--port=/) > -1){
-    return i.replace(/^--port=/g,'')
-  }
-})
-console.log(port)
-socket(port)
+
 

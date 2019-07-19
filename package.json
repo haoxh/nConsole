@@ -1,6 +1,6 @@
 {
-  "name": "nConsole",
-  "version": "1.0.0",
+  "name": "@haoxh/nconsole",
+  "version": "0.0.1",
   "description": "跨端(移动端)共享 console.log & 跨端监控解决方案",
   "main": "index.js",
   "scripts": {
@@ -16,8 +16,12 @@
     "type": "git",
     "url": "git+https://github.com/haoxh/nConsole.git"
   },
+  "bin":{
+    "nConsole": "./index.js"
+  },
   "keywords": [],
-  "author": "",
+  "author": "https://github.com/haoxh",
+  "readme": "https://github.com/haoxh/nConsole/blob/master/README.md",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/haoxh/nConsole/issues"
@@ -39,7 +43,10 @@
     "socket.io": "^2.2.0"
   },
   "dependencies": {
-    "core-js": "^3.1.4",
     "socket.io-client": "^2.2.0"
-  }
+  },
+  "files": [
+    "src",
+    "nconsole.umd.min.js"
+  ]
 }

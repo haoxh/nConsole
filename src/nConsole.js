@@ -1,13 +1,27 @@
-
-import io from 'socket.io-client/dist/socket.io.slim'
+import io from "socket.io-client/dist/socket.io.slim";
+import {
+  isObject,
+  stringify,
+  mapToString,
+  toString,
+  setToString,
+  parse,
+  toNull,
+  toUndefined,
+  toBoolean,
+  ToSet,
+  toMap,
+  toFunction,
+  toNumber
+} from "./utils";
 
 if (!Array.isArray) {
-  Array.isArray = function (args) {
+  Array.isArray = function(args) {
     return "length" in args && "push" in args;
   };
 }
 if (!Object.keys) {
-  Object.keys = function (args) {
+  Object.keys = function(args) {
     if (Object.prototype.toString.call(args) !== "[object Object]")
       throw new TypeError(" arguments must be an Object");
     var keys = [];
@@ -18,7 +32,7 @@ if (!Object.keys) {
   };
 }
 if (!Array.prototype.map) {
-  Array.prototype.map = function (callback, thisArg) {
+  Array.prototype.map = function(callback, thisArg) {
     var T, A, k;
     if (this === null) throw new TypeError(" this is null or not defined");
     var O = Object(this);
@@ -46,21 +60,20 @@ let ioMessage = {};
 const M = Math.random().toString();
 
 export default function nConsole(options = {}) {
-  const isHTTPS = window.location.protocol === 'https:';
+  const isHTTPS = window.location.protocol === "https:";
   const userAgent = window.navigator.userAgent;
   let {
-    protocol = 'http',
-    host = '0.0.0.0',
-    port = '3114',
-    path = '/nconsole_message'
+    protocol = "http",
+    host = "0.0.0.0",
+    port = "3114",
+    path = "/nconsole_message"
   } = options;
   if (!window.console) window.console = {};
-  if (isHTTPS) protocol = 'https';
+  if (isHTTPS) protocol = "https";
   ioMessage = io.connect(`${protocol}://${host}:${port}${path}`);
-  repalceConsole()
-  registerConsoleMessage()
+  repalceConsole();
+  registerConsoleMessage();
   ioMessage.emit("userAgent", userAgent);
-
 }
 
 function socketEmit(data, code) {
@@ -74,11 +87,19 @@ function socketEmit(data, code) {
 
 function registerConsoleMessage() {
   ioMessage.on("fetchState", fetchState);
-  ioMessage.on("consoleMessage", consoleMessage)
+  ioMessage.on("consoleMessage", consoleMessage);
 }
 
 function repalceConsole() {
-  const _consoleDescriptors = ["error", "log", "info", "warn", "dir", 'compiler', 'print'];
+  const _consoleDescriptors = [
+    "error",
+    "log",
+    "info",
+    "warn",
+    "dir",
+    "compiler",
+    "print"
+  ];
   for (let i = 0, len = _consoleDescriptors.length; i < len; i++) {
     let code = _consoleDescriptors[i];
     if (code in window.console) {
@@ -97,7 +118,7 @@ function registerConsole(code) {
 }
 
 function fetchState(data) {
-  if (data === 'fetchOpen') {
+  if (data === "fetchOpen") {
     window._isWatchRequest = true;
   } else {
     window._isWatchRequest = null;
@@ -109,40 +130,40 @@ function consoleMessage(data) {
     let code = data.code;
     let message = data.message;
     let arr = [];
-    if (code === 'compiler') {
-      arr = message.map(function (i) {
-        if (typeof i === 'string') {
+    if (code === "compiler") {
+      arr = message.map(function(i) {
+        if (typeof i === "string") {
           try {
-            return (new Function('return ' + i))()
-          } catch (e) { }
+            return new Function("return " + i)();
+          } catch (e) {}
         }
       });
-      messageSend('log', arr);
-      return
-    } else if (code === 'performance') {
+      messageSend("log", arr);
+      return;
+    } else if (code === "performance") {
       if (window.performance) {
         var o = {};
         arr = message;
-        if (!arr[0] || arr[0] === 'resource') {
+        if (!arr[0] || arr[0] === "resource") {
           o = window.performance.getEntriesByType("resource");
-        } else if (arr[0] === 'timing') {
+        } else if (arr[0] === "timing") {
           var _performance = window.performance.timing;
           o = Object(_performance);
         }
-        socketEmit([o], 'log');
+        socketEmit([o], "log");
       }
-      return
+      return;
     }
     message.map(item => {
       arr.push(toSource(item));
     });
-    if (code === 'print') {
+    if (code === "print") {
       if (console.table) {
         console.table.apply(console.table, arr);
       } else {
-        _console['log'].apply(_console['log'], arr);
+        _console["log"].apply(_console["log"], arr);
       }
-      return
+      return;
     }
     _console[code].apply(_console[code], arr);
   }
@@ -183,7 +204,7 @@ const outputSorce = {
   "[object Map]": toMap,
   "[object Number]": toNumber,
   "[object Undefined]": toUndefined,
-  "[object Function]": toFunction,
+  "[object Function]": toFunction
 };
 
 function messageSend(code, args) {
@@ -197,62 +218,22 @@ function messageSend(code, args) {
       args[i] = outputToString(args[i]);
     }
   }
-  if (typeof args[0].value === 'string' && /(\[WDS\])|(\[HMR\])/.test(args[0].value)) {
-    return
+  if (
+    typeof args[0].value === "string" &&
+    /(\[WDS\])|(\[HMR\])/.test(args[0].value)
+  ) {
+    return;
   }
   socketEmit(args, code);
 }
 
-
-window.addEventListener("error", function (e) {
+window.addEventListener("error", function(e) {
   if (e.error && e.error.stack) {
     console.error(e.error.stack.toString());
   } else {
     console.error(Object(e));
   }
 });
-
-
-/**************** utils ⬇ ****************/
-function isObject(args) {
-  return Object.prototype.toString ?
-    Object.prototype.toString.call(args) === "[object Object]" :
-    typeof args === "object";
-}
-
-function deepArrayToString(data) {
-  for (let i = 0, len = data.length; i < len; i++) {
-    data[i] = deepToObject(data[i]);
-  }
-  return data;
-}
-
-function deepObjectToString(data) {
-  data = Object.keys(data).map(function (item) {
-    let o = {}
-    o[item] = deepToObject(data[item])
-    return o
-  });
-  return data;
-}
-
-function deepToObject(data) {
-  if (Array.isArray(data)) {
-    return deepArrayToString(data);
-  } else if (isObject(data)) {
-    return deepObjectToString(data);
-  }
-  return outputObjectToString(data);
-}
-
-function outputObjectToString(value) {
-  let key = {}.toString.call(value);
-  if (outputObject[key]) {
-    return outputObject[key].call(this, value)
-  } else {
-    return value
-  }
-}
 
 function outputToString(value) {
   let key = {}.toString.call(value);
@@ -268,83 +249,6 @@ function outputToString(value) {
   };
 }
 
-
-function stringify(object) {
-  try {
-    return JSON.stringify(object);
-  } catch (e) {
-    return object.toString();
-  }
-}
-
-function mapToString(Map) {
-  if (Array.from) {
-    return JSON.stringify(Array.from(Map));
-  } else {
-    Map.toString();
-  }
-}
-
-function toString(value) {
-  return value.toString();
-}
-
-function setToString(Set) {
-  if (Array.from) {
-    return JSON.stringify(Array.from(Set));
-  }
-  return JSON.stringify(Set);
-}
-
-function parse(value) {
-  try {
-    return JSON.parse(value);
-  } catch (e) {
-    return value;
-  }
-}
-
-function toNull() {
-  return null;
-}
-
-function toUndefined() {
-  return undefined;
-}
-
-function toBoolean(value) {
-  return new Function("return " + value)();
-}
-
-
-function ToSet(value) {
-  if (window.Set) {
-    return new Set(JSON.parse(value));
-  } else {
-    return value;
-  }
-}
-
-function toMap(value) {
-  if (window.Map) {
-    try {
-      return new Map(JSON.parse(value));
-    } catch (e) {
-      return value;
-    }
-  } else {
-    return value;
-  }
-}
-
-function toFunction(value) {
-  return new Function("return " + value)();
-}
-
-function toNumber(value) {
-  return Number(value);
-}
-
 function toSource(message) {
   if (message && message.type) {
     if (outputSorce[message.type]) {
@@ -355,4 +259,38 @@ function toSource(message) {
   } else {
     return message;
   }
+}
+
+function outputObjectToString(value) {
+  let key = {}.toString.call(value);
+  if (outputObject[key]) {
+    return outputObject[key].call(this, value);
+  } else {
+    return value;
+  }
+}
+
+function deepArrayToString(data) {
+  for (let i = 0, len = data.length; i < len; i++) {
+    data[i] = deepToObject(data[i]);
+  }
+  return data;
+}
+
+function deepObjectToString(data) {
+  data = Object.keys(data).map(function(item) {
+    let o = {};
+    o[item] = deepToObject(data[item]);
+    return o;
+  });
+  return data;
+}
+
+function deepToObject(data) {
+  if (Array.isArray(data)) {
+    return deepArrayToString(data);
+  } else if (isObject(data)) {
+    return deepObjectToString(data);
+  }
+  return outputObjectToString(data);
 }
