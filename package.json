@@ -1,7 +1,7 @@
 {
   "name": "nConsole",
   "version": "1.0.0",
-  "description": "Shared console",
+  "description": "跨端(移动端)共享 console.log & 跨端监控解决方案",
   "main": "index.js",
   "scripts": {
     "build": "node scripts/build.js",
@@ -9,8 +9,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run eslint",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "pre-commit": "npm run eslint"
     }
   },
   "repository": {
