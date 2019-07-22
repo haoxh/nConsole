@@ -65,12 +65,20 @@ console.fetch.close()
 
 ### 使用 nConsole
 
-> npm i @haoxh/nconsole --save-dev
+```sh
+ npm i @haoxh/nconsole -D
+```
+
+or
+
+```sh
+ yarn add @haoxh/nconsole -D
+```
 
 启动服务
 
-```shell
-$ npx nconsole
+```sh
+ npx nconsole
 ```
 
 引入依赖
