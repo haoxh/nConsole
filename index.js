@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const socket = require('./src/socket.js')
 let port = process.argv.find(i =>{
   if(i.search(/^--port=/) > -1){

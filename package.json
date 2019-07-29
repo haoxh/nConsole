@@ -17,7 +17,7 @@
     "url": "git+https://github.com/haoxh/nConsole.git"
   },
   "bin":{
-    "nConsole": "node ./index.js"
+    "nConsole": "./index.js"
   },
   "keywords": ["console"],
   "author": "https://github.com/haoxh",
